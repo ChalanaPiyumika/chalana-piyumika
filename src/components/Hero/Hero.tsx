@@ -111,11 +111,11 @@ export default function Hero() {
             {/* Typewriter */}
             <motion.div
               variants={fadeUp}
-              className="flex items-center gap-2 text-xl md:text-2xl font-semibold mb-4"
+              className="text-xl md:text-2xl font-semibold mb-4 leading-normal"
             >
-              <span className="text-muted-foreground">I&apos;m a</span>
+              <span className="text-muted-foreground whitespace-nowrap mr-2">I&apos;m a</span>
               <span ref={textRef} className="text-primary" />
-              <span className="cursor-blink" />
+              <span className="cursor-blink align-middle ml-[2px]" />
             </motion.div>
 
             {/* Bio */}
