@@ -41,7 +41,7 @@ export default function Projects() {
   const filtered = getFiltered(activeFilter);
 
   return (
-    <section id="projects" className="py-8 md:py-12 relative overflow-hidden" style={{ background: "hsl(var(--bg))" }}>
+    <section id="projects" className="py-8 md:py-12 relative overflow-hidden min-h-[100dvh]" style={{ background: "hsl(var(--bg))" }}>
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
            style={{ background: "radial-gradient(circle, hsl(190 72% 52% / 0.15), transparent 70%)" }} />
 
@@ -92,25 +92,27 @@ export default function Projects() {
         </motion.div>
 
         {/* Cards */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeFilter}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {filtered.map((project, i) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={i}
-                accent={cardAccents[i % cardAccents.length]}
-              />
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        <div className="min-h-[800px] md:min-h-[600px] w-full">
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={activeFilter}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {filtered.map((project, i) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={i}
+                  accent={cardAccents[i % cardAccents.length]}
+                />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );
@@ -129,9 +131,9 @@ function ProjectCard({
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, delay: index * 0.07 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
       className={`group flex flex-col rounded-2xl overflow-hidden bg-card border border-border
                   hover:border-primary/40 hover:-translate-y-1.5 hover:shadow-xl ${accent.glow}
                   transition-all duration-300`}
