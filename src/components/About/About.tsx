@@ -4,34 +4,34 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { profile } from "@/data/profile";
 
-import { Monitor, Server, Cloud, Layers, MapPin, Mail, Phone, Briefcase, Coffee } from "lucide-react";
+import { Monitor, Server, Cloud, Layers, MapPin, Mail, Phone } from "lucide-react";
 
 const services = [
   {
     icon: <Monitor className="w-6 h-6" />,
     title: "Frontend Development",
-    desc: "Pixel-perfect UIs with React, Next.js, TypeScript, and Tailwind CSS.",
+    desc: "Responsive web interfaces using React, Next.js, TypeScript, and Tailwind CSS.",
     color: "text-violet-500",
     bg: "bg-violet-50 dark:bg-violet-900/20",
   },
   {
     icon: <Server className="w-6 h-6" />,
     title: "Backend Development",
-    desc: "Scalable REST & GraphQL APIs with Node.js, Express, and PostgreSQL.",
+    desc: "Scalable backend systems and REST APIs with Spring Boot, Django, Nest.js, and Express.",
     color: "text-cyan-500",
     bg: "bg-cyan-50 dark:bg-cyan-900/20",
   },
   {
     icon: <Cloud className="w-6 h-6" />,
-    title: "Cloud & DevOps",
-    desc: "Deployment on AWS, Vercel & GCP with CI/CD pipelines and Docker.",
+    title: "Cloud & Databases",
+    desc: "Database management with MySQL/PostgreSQL and cloud deployments on AWS and Azure.",
     color: "text-orange-500",
     bg: "bg-orange-50 dark:bg-orange-900/20",
   },
   {
     icon: <Layers className="w-6 h-6" />,
-    title: "System Design",
-    desc: "Architecting robust, maintainable systems with clean code principles.",
+    title: "Software Engineering",
+    desc: "Building robust systems applying OOP principles, data structures, and clean architecture.",
     color: "text-emerald-500",
     bg: "bg-emerald-50 dark:bg-emerald-900/20",
   },
@@ -72,13 +72,13 @@ export default function About() {
             Who I <span className="text-gradient">Am</span>
           </h2>
           <p className="text-[17px] text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Passionate about building things that make a real difference — one line of code at a time.
+            Passionate about building things that make a real difference - one line of code at a time.
           </p>
         </motion.div>
 
         {/* ── Content ── */}
         <div className="flex flex-col gap-14 max-w-4xl mx-auto">
-          
+
           <div className="flex flex-col gap-10">
             {/* Bio */}
             <motion.div
@@ -92,10 +92,6 @@ export default function About() {
               </h3>
               <p className="text-[16px] leading-[1.85] text-muted-foreground mb-4">
                 {profile.aboutBio}
-              </p>
-              <p className="text-[16px] leading-[1.85] text-muted-foreground">
-                When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to open source,
-                or enjoying a good cup of coffee <Coffee className="w-4 h-4 inline-block mx-1 -mt-1 text-amber-500" /> while reading about system design and software architecture.
               </p>
             </motion.div>
 
