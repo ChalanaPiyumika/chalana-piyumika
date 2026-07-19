@@ -3,7 +3,7 @@ import { profile } from "@/data/profile";
 
 export const runtime = "edge";
 
-export const alt = "Chalana Piyumika - Full Stack Software Engineer";
+export const alt = "Chalana Piyumika - Software Engineer";
 export const size = {
   width: 1200,
   height: 630,
@@ -48,9 +48,12 @@ export default async function Image() {
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
               textAlign: "center",
+              display: "flex",
+              gap: "24px",
             }}
           >
-            {profile.name}
+            <span>{profile.name.split(" ")[0]}</span>
+            <span style={{ color: "#0ea5e9" }}>{profile.name.split(" ").slice(1).join(" ")}</span>
           </h1>
           <p
             style={{
@@ -64,7 +67,7 @@ export default async function Image() {
               textAlign: "center",
             }}
           >
-            {profile.title}
+            Software Engineer
           </p>
         </div>
       </div>
