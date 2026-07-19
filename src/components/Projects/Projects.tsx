@@ -41,7 +41,7 @@ export default function Projects() {
   const filtered = getFiltered(activeFilter);
 
   return (
-    <section id="projects" className="py-28 relative overflow-hidden" style={{ background: "hsl(var(--bg))" }}>
+    <section id="projects" className="py-8 md:py-12 relative overflow-hidden" style={{ background: "hsl(var(--bg))" }}>
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
            style={{ background: "radial-gradient(circle, hsl(190 72% 52% / 0.15), transparent 70%)" }} />
 

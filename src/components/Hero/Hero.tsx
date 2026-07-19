@@ -52,7 +52,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative h-screen flex items-center overflow-hidden"
+      className="relative min-h-[100dvh] lg:h-screen flex items-center overflow-hidden"
       style={{ background: "hsl(var(--bg))" }}
     >
       {/* ── Mesh gradient background ── */}

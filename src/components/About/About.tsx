@@ -50,7 +50,7 @@ const fadeUp = (delay = 0) => ({
 
 export default function About() {
   return (
-    <section id="about" className="py-28 relative overflow-hidden" style={{ background: "hsl(var(--bg))" }}>
+    <section id="about" className="py-8 md:py-12 relative overflow-hidden" style={{ background: "hsl(var(--bg))" }}>
       {/* Subtle background accent */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-30 pointer-events-none"
         style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.08), transparent 70%)" }} />

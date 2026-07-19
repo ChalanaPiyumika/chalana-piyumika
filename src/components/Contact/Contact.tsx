@@ -84,7 +84,7 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   return (
-    <section id="contact" className="py-28 relative overflow-hidden" style={{ background: "hsl(var(--bg))" }}>
+    <section id="contact" className="py-8 md:py-12 relative overflow-hidden" style={{ background: "hsl(var(--bg))" }}>
       <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
         style={{ background: "radial-gradient(circle, hsl(var(--primary)/0.12), transparent 70%)" }} />
 

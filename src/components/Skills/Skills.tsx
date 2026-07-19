@@ -21,7 +21,7 @@ export default function Skills() {
   const active = skills.find((s) => s.category === activeCategory) ?? skills[0];
 
   return (
-    <section id="skills" className="py-28 relative overflow-hidden bg-secondary/30 dark:bg-secondary/10">
+    <section id="skills" className="py-8 md:py-12 relative overflow-hidden bg-secondary/30 dark:bg-secondary/10">
       <div className="absolute -top-32 right-1/4 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
         style={{ background: "radial-gradient(circle, hsl(var(--primary)/0.2), transparent 70%)" }} />
 
