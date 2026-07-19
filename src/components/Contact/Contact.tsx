@@ -18,12 +18,7 @@ const contactInfo = [
     value: profile.phone,
     href: `tel:${profile.phone}`,
   },
-  {
-    icon: <MapPin className="w-6 h-6" />,
-    label: "Location",
-    value: profile.location,
-    href: null,
-  },
+
 ];
 
 function SocialIcon({ name }: { name: string }) {

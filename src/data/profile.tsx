@@ -6,7 +6,7 @@ export const profile = {
   tagline: "Crafting elegant solutions from complex problems",
   heroBio: "I am a passionate Computer Science undergraduate and Software Engineer focused on full-stack development, cloud computing, and AI. I love turning complex problems into elegant, user-friendly solutions.",
   aboutBio: "I am a Computer Science undergraduate and Software Engineer with a strong passion for technology and innovation. With hands-on experience in full-stack web and application development, I enjoy creating practical, user-friendly solutions. I am especially interested in cloud computing and artificial intelligence, and I constantly strive to learn new technologies to solve real-world problems.",
-  location: "Jayaminipura, Diyathalawa",
+
   email: "chalanapiyumika1@gmail.com",
   phone: "+94 71 216 6336",
   availability: "Available",

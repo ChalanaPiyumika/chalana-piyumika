@@ -38,7 +38,7 @@ const services = [
 ];
 
 const infoCards = [
-  { icon: <MapPin className="w-5 h-5" />, label: "Location", value: profile.location },
+
   { icon: <Mail className="w-5 h-5" />, label: "Email", value: profile.email },
   { icon: <Phone className="w-5 h-5" />, label: "Phone", value: profile.phone },
 ];
@@ -101,7 +101,7 @@ export default function About() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp(0.1)}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             >
               {infoCards.map((card) => (
                 <div
