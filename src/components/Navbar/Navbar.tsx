@@ -1,19 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { profile } from "@/data/profile";
+import { profile, navLinks } from "@/data/profile";
 import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
-
-const navLinks = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
-];
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
@@ -21,11 +11,11 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 50);
       const ids = navLinks.map((l) => l.href.slice(1));
       for (let i = ids.length - 1; i >= 0; i--) {
         const el = document.getElementById(ids[i]);
-        if (el && window.scrollY >= el.offsetTop - 120) {
+        if (el && window.scrollY >= el.offsetTop - 130) {
           setActive(ids[i]);
           break;
         }
@@ -36,95 +26,97 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b bg-background/80 backdrop-blur-md shadow-sm py-3"
-          : "bg-transparent py-5"
-      }`}
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${scrolled
+          ? "py-3 bg-card/85 backdrop-blur-xl border-b border-border shadow-sm"
+          : "py-5 bg-transparent"
+        }`}
     >
-      <div className="container max-w-6xl mx-auto px-6 flex items-center justify-between gap-6">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+
         {/* Logo */}
         <a
           href="#home"
-          className="font-mono font-bold text-xl flex items-center gap-px text-foreground hover:text-primary transition-colors"
+          className="font-mono font-black text-xl flex items-center text-foreground hover:text-primary transition-colors duration-200"
         >
           <span className="text-primary">&lt;</span>
-          CP
+          Chalana
           <span className="text-primary">/&gt;</span>
         </a>
 
-        {/* Desktop Links */}
-        <ul className="hidden md:flex items-center gap-1 list-none m-0 p-0 flex-1 justify-center">
-          {navLinks.map((link) => (
-            <li key={link.href}>
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-0.5">
+          {navLinks.map((link) => {
+            const isActive = active === link.href.slice(1);
+            return (
               <a
+                key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  active === link.href.slice(1)
-                    ? "bg-secondary text-secondary-foreground"
-                    : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
-                }`}
+                className={`relative px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
-                {link.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    className="absolute inset-0 rounded-xl bg-primary/8 border border-primary/15"
+                    transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                  />
+                )}
+                <span className="relative z-10">{link.label}</span>
               </a>
-            </li>
-          ))}
-        </ul>
+            );
+          })}
+        </nav>
 
-        {/* Right side actions */}
-        <div className="flex items-center gap-3">
+        {/* Right actions */}
+        <div className="flex items-center gap-2.5">
           <ThemeToggle />
-
           <a
             href={profile.resume}
             download
-            className="hidden md:inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
+            className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold
+                       bg-primary text-white shadow-sm shadow-primary/20
+                       hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-200"
           >
             Resume
           </a>
 
-          {/* Hamburger */}
+          {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen((o) => !o)}
             aria-label="Toggle menu"
-            className="md:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 rounded-md hover:bg-secondary text-foreground transition-colors"
+            className="md:hidden w-10 h-10 rounded-xl border border-border bg-card flex flex-col
+                       justify-center items-center gap-[5px] text-foreground transition-all duration-200"
           >
-            <span
-              className={`block w-5 h-0.5 bg-current rounded-sm transition-all duration-300 ${
-                menuOpen ? "translate-y-[7px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`block w-5 h-0.5 bg-current rounded-sm transition-all duration-300 ${
-                menuOpen ? "opacity-0 scale-x-0" : ""
-              }`}
-            />
-            <span
-              className={`block w-5 h-0.5 bg-current rounded-sm transition-all duration-300 ${
-                menuOpen ? "-translate-y-[7px] -rotate-45" : ""
-              }`}
-            />
+            <span className={`w-5 h-0.5 bg-current rounded transition-all duration-300 ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
+            <span className={`w-5 h-0.5 bg-current rounded transition-all duration-300 ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
+            <span className={`w-5 h-0.5 bg-current rounded transition-all duration-300 ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden overflow-hidden border-t bg-background/95 backdrop-blur-xl"
+            transition={{ duration: 0.22 }}
+            className="md:hidden overflow-hidden border-t border-border bg-card/95 backdrop-blur-xl"
           >
-            <div className="px-6 py-4 flex flex-col gap-2">
+            <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                  className={`px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${active === link.href.slice(1)
+                      ? "bg-primary/8 text-primary border border-primary/15"
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                    }`}
                 >
                   {link.label}
                 </a>
@@ -132,7 +124,8 @@ export default function Navbar() {
               <a
                 href={profile.resume}
                 download
-                className="mt-2 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 px-4 py-2"
+                className="mt-2 inline-flex items-center justify-center rounded-xl text-sm font-semibold
+                           bg-primary text-white shadow-sm h-10 px-4 transition-all duration-200"
               >
                 Download Resume
               </a>
@@ -140,6 +133,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 }

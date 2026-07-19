@@ -1,210 +1,264 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { profile } from "@/data/profile";
 import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import Image from "next/image";
+import { profile, socialLinks } from "@/data/profile";
+import { MdWavingHand } from "react-icons/md";
 
-const roles = ["Full Stack Developer", "Problem Solver", "Open Source Contributor"];
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as const } },
+};
 
 export default function Hero() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
   const roleIndex = useRef(0);
   const charIndex = useRef(0);
   const isDeleting = useRef(false);
-  const textRef = useRef<HTMLSpanElement>(null);
 
-  // Typewriter
   useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-    const type = () => {
-      const current = roles[roleIndex.current];
+    let t: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      const cur = profile.roles[roleIndex.current];
       if (!textRef.current) return;
       if (!isDeleting.current) {
-        textRef.current.textContent = current.slice(0, charIndex.current + 1);
+        textRef.current.textContent = cur.slice(0, charIndex.current + 1);
         charIndex.current++;
-        if (charIndex.current === current.length) {
+        if (charIndex.current === cur.length) {
           isDeleting.current = true;
-          timeout = setTimeout(type, 1800);
+          t = setTimeout(tick, 2200);
           return;
         }
       } else {
-        textRef.current.textContent = current.slice(0, charIndex.current - 1);
+        textRef.current.textContent = cur.slice(0, charIndex.current - 1);
         charIndex.current--;
         if (charIndex.current === 0) {
           isDeleting.current = false;
-          roleIndex.current = (roleIndex.current + 1) % roles.length;
+          roleIndex.current = (roleIndex.current + 1) % profile.roles.length;
         }
       }
-      timeout = setTimeout(type, isDeleting.current ? 60 : 90);
+      t = setTimeout(tick, isDeleting.current ? 42 : 72);
     };
-    timeout = setTimeout(type, 800);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  // Particle canvas
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    let animId: number;
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-    const particles = Array.from({ length: 60 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.5 + 0.3,
-      dx: (Math.random() - 0.5) * 0.3,
-      dy: (Math.random() - 0.5) * 0.3,
-      alpha: Math.random() * 0.5 + 0.1,
-    }));
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p) => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsl(var(--primary) / ${p.alpha})`;
-        ctx.fill();
-        p.x += p.dx; p.y += p.dy;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-      });
-      animId = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => { cancelAnimationFrame(animId); window.removeEventListener("resize", resize); };
+    t = setTimeout(tick, 900);
+    return () => clearTimeout(t);
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-background">
-      {/* Particle canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 pointer-events-none opacity-50 dark:opacity-100 transition-opacity duration-500"
-      />
+    <section
+      id="home"
+      className="relative h-screen flex items-center overflow-hidden"
+      style={{ background: "hsl(var(--bg))" }}
+    >
+      {/* ── Mesh gradient background ── */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Light: coloured blobs visible on white; Dark: deep-toned versions */}
+        <div
+          className="animate-blob absolute -top-32 -left-32 w-[650px] h-[650px] rounded-full opacity-40 dark:opacity-30"
+          style={{ background: "radial-gradient(circle, var(--mesh-1), transparent 70%)" }}
+        />
+        <div
+          className="animate-blob-delay absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full opacity-35 dark:opacity-25"
+          style={{ background: "radial-gradient(circle, var(--mesh-2), transparent 70%)" }}
+        />
+        <div
+          className="absolute bottom-0 left-1/3 w-[400px] h-[400px] rounded-full opacity-30 dark:opacity-20"
+          style={{ background: "radial-gradient(circle, var(--mesh-3), transparent 70%)" }}
+        />
+        {/* Fine dot grid */}
+        <div
+          className="absolute inset-0 opacity-[0.35] dark:opacity-[0.12]"
+          style={{
+            backgroundImage:
+              "radial-gradient(hsl(var(--primary) / 0.5) 1px, transparent 1px)",
+            backgroundSize: "30px 30px",
+          }}
+        />
+      </div>
 
-      {/* Decorative Blobs */}
-      <div className="absolute -top-32 -left-40 w-[600px] h-[600px] rounded-full bg-primary/10 blur-[100px] pointer-events-none animate-drift1" />
-      <div className="absolute top-1/3 -right-20 w-[400px] h-[400px] rounded-full bg-accent/10 blur-[100px] pointer-events-none animate-drift2" />
+      {/* ── Main content ── */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-20 pb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-20 dark:opacity-40"
-        style={{
-          backgroundImage: "linear-gradient(hsl(var(--primary) / 0.1) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.1) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-          maskImage: "radial-gradient(ellipse at center, black 30%, transparent 80%)",
-        }}
-      />
-
-      {/* Main content */}
-      <div className="container relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-20">
-
-        {/* Availability Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full border bg-secondary/50 text-secondary-foreground text-sm font-medium"
-        >
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-available shadow-[0_0_0_3px_rgba(16,185,129,0.2)]" />
-          {profile.availability}
-        </motion.div>
-
-        {/* Hero Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] mb-6 text-foreground"
-          style={{ fontFamily: "var(--font-outfit)" }}
-        >
-          Hi, I&apos;m{" "}
-          <span className="bg-gradient-to-br from-primary via-accent to-pink-500 bg-clip-text text-transparent">
-            {profile.name}
-          </span>
-        </motion.h1>
-
-        {/* Typewriter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-2xl md:text-3xl font-semibold mb-6 flex items-center gap-2 min-h-[1.5em]"
-        >
-          <span className="text-muted-foreground">I&apos;m a</span>
-          <span ref={textRef} className="text-primary" />
-          <span className="cursor-blink text-primary" />
-        </motion.div>
-
-        {/* Bio */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl"
-        >
-          {profile.bio}
-        </motion.p>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-wrap gap-4 mb-16"
-        >
-          <a
-            href="#projects"
-            className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary/90 h-11 px-8"
+          {/* ════ LEFT ════ */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col justify-center"
           >
-            View My Work
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-11 px-8"
-          >
-            Get In Touch
-          </a>
-        </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-wrap gap-10 md:gap-16"
-        >
-          {profile.stats.map((stat, i) => (
-            <div key={stat.label} className="flex flex-col gap-1">
-              <span
-                className="text-4xl font-black text-foreground"
-                style={{ fontFamily: "var(--font-outfit)" }}
+
+            {/* Heading */}
+            <motion.div variants={fadeUp} className="mb-5">
+              <p className="text-base md:text-lg font-semibold text-muted-foreground mb-2 tracking-wide">
+                Hi there, I&apos;m <MdWavingHand className="w-5 h-5 inline ml-1 -mt-1 text-amber-500" />
+              </p>
+              <h1
+                className="text-[2.6rem] sm:text-[3.2rem] xl:text-[3.8rem] font-black leading-[1.04] tracking-tight text-foreground"
+                style={{ fontFamily: "var(--font-display)" }}
               >
-                {stat.value}
-              </span>
-              <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                {stat.label}
-              </span>
+                {profile.name.split(" ")[0]}{" "}
+                <span className="text-shimmer">{profile.name.split(" ").slice(1).join(" ")}</span>
+              </h1>
+            </motion.div>
+
+            {/* Typewriter */}
+            <motion.div
+              variants={fadeUp}
+              className="flex items-center gap-2 text-xl md:text-2xl font-semibold mb-4"
+            >
+              <span className="text-muted-foreground">I&apos;m a</span>
+              <span ref={textRef} className="text-primary" />
+              <span className="cursor-blink" />
+            </motion.div>
+
+            {/* Bio */}
+            <motion.p
+              variants={fadeUp}
+              className="text-base md:text-[16px] leading-[1.7] text-muted-foreground mb-5 max-w-[520px]"
+            >
+              {profile.bio}
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-3 mb-5">
+              <a
+                href="#projects"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm
+                           bg-primary text-white shadow-lg shadow-primary/25
+                           hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0
+                           transition-all duration-200"
+              >
+                View My Work
+                <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm
+                           border border-border bg-card text-foreground
+                           hover:border-primary/40 hover:bg-primary/5 hover:-translate-y-0.5 active:translate-y-0
+                           transition-all duration-200"
+              >
+                Contact Me
+              </a>
+              <a
+                href={profile.resume}
+                download
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm
+                           border border-border bg-card text-foreground
+                           hover:border-primary/40 hover:bg-primary/5 hover:-translate-y-0.5 active:translate-y-0
+                           transition-all duration-200"
+              >
+                <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                </svg>
+                Resume
+              </a>
+            </motion.div>
+
+            {/* Social links */}
+            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center
+                             border border-border bg-card text-muted-foreground
+                             hover:border-primary/50 hover:text-primary hover:bg-primary/5
+                             hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  {s.icon}
+                </a>
+              ))}
+              <div className="w-px h-6 bg-border mx-1" />
+              <span className="text-xs text-muted-foreground font-medium">Find me online</span>
+            </motion.div>
+
+            {/* Stats row */}
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-6 pt-5 border-t border-border">
+              {profile.stats.map((stat) => (
+                <div key={stat.label} className="flex flex-col gap-0.5">
+                  <span
+                    className="text-2xl font-black text-foreground tracking-tight"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {stat.value}
+                  </span>
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* ════ RIGHT ════ */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.85, delay: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="relative flex items-center justify-center lg:justify-end"
+          >
+            {/* Rotating dashed ring */}
+            <div
+              className="absolute w-[390px] h-[390px] rounded-full border-2 border-dashed border-primary/20 animate-rotate-slow"
+              aria-hidden
+            />
+            {/* Solid outer ring at 45deg offset */}
+            <div
+              className="absolute w-[330px] h-[330px] rounded-full border border-primary/10"
+              aria-hidden
+            />
+
+            {/* Glow orbs */}
+            <div className="absolute w-72 h-72 rounded-full bg-primary/15 blur-[70px] dark:bg-primary/20 dark:blur-[80px]" />
+            <div className="absolute -bottom-8 -right-8 w-48 h-48 rounded-full bg-accent/15 blur-[50px]" />
+
+            {/* Photo container */}
+            <div className="relative animate-float">
+              {/* Modern Portrait Frame */}
+              <div className="relative p-3 rounded-[2rem] bg-card border border-border shadow-2xl shadow-primary/10 rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+                <div
+                  className="w-[260px] h-[340px] md:w-[300px] md:h-[400px] rounded-[1.25rem] overflow-hidden bg-muted relative"
+                >
+                  <Image
+                    src={profile.avatar}
+                    alt={profile.name}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 300px, 340px"
+                    priority
+                  />
+                  {/* Subtle inner overlay for blending */}
+                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-[1.25rem]" />
+                </div>
+              </div>
             </div>
-          ))}
-        </motion.div>
+
+          </motion.div>
+        </div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground text-xs font-semibold tracking-widest uppercase"
+        animate={{ y: [0, 9, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >
-        <div className="w-px h-10 bg-gradient-to-b from-transparent to-primary/50" />
-        Scroll
+        <div className="w-5 h-8 rounded-full border-2 border-border flex items-start justify-center pt-1.5">
+          <div className="w-1 h-2 rounded-full bg-primary animate-float-sm" />
+        </div>
       </motion.div>
     </section>
   );
