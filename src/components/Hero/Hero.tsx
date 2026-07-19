@@ -123,7 +123,7 @@ export default function Hero() {
               variants={fadeUp}
               className="text-base md:text-[16px] leading-[1.7] text-muted-foreground mb-5 max-w-[520px]"
             >
-              {profile.bio}
+              {profile.heroBio}
             </motion.p>
 
             {/* CTAs */}

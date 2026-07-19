@@ -61,14 +61,32 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+    try {
+      const submissionData = new FormData(e.currentTarget);
+      submissionData.append("access_key", "16fdfb9b-bfab-42ee-bed7-31454a5317b9");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: submissionData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setStatus("idle"), 4000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 4000);
+      }
+    } catch (error) {
+      setStatus("error");
       setTimeout(() => setStatus("idle"), 4000);
-    }, 1600);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -252,6 +270,8 @@ export default function Contact() {
                   </>
                 ) : status === "success" ? (
                   <><CheckCircle2 className="w-4 h-4 inline mr-1" /> Message Sent!</>
+                ) : status === "error" ? (
+                  <>Error! Try Again</>
                 ) : (
                   <>
                     Send Message

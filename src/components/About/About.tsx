@@ -41,7 +41,6 @@ const infoCards = [
   { icon: <MapPin className="w-5 h-5" />, label: "Location", value: profile.location },
   { icon: <Mail className="w-5 h-5" />, label: "Email", value: profile.email },
   { icon: <Phone className="w-5 h-5" />, label: "Phone", value: profile.phone },
-  { icon: <Briefcase className="w-5 h-5" />, label: "Status", value: profile.availability },
 ];
 
 const fadeUp = (delay = 0) => ({
@@ -92,7 +91,7 @@ export default function About() {
                 My Story
               </h3>
               <p className="text-[16px] leading-[1.85] text-muted-foreground mb-4">
-                {profile.bio}
+                {profile.aboutBio}
               </p>
               <p className="text-[16px] leading-[1.85] text-muted-foreground">
                 When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to open source,
@@ -106,7 +105,7 @@ export default function About() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp(0.1)}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-4"
             >
               {infoCards.map((card) => (
                 <div

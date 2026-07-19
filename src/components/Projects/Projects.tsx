@@ -6,17 +6,17 @@ import { projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
 import { Rocket, Briefcase, MapPin, Compass, GraduationCap, Star } from "lucide-react";
 
-const filters = ["All", "Featured", "In Progress", "Completed"] as const;
+const filters = ["All", "In Progress", "Completed"] as const;
 type Filter = (typeof filters)[number];
 
 function getFiltered(filter: Filter) {
   if (filter === "All") return projects;
-  if (filter === "Featured") return projects.filter((p) => p.featured);
   if (filter === "In Progress") return projects.filter((p) => p.status === "in-progress");
   return projects.filter((p) => p.status === "completed");
 }
 
 const projectIcons: Record<string, React.ReactNode> = {
+  "charani-tours": <MapPin className="w-16 h-16 text-primary/80" />,
   jobseek: <Briefcase className="w-16 h-16 text-primary/80" />,
   travelease: <MapPin className="w-16 h-16 text-primary/80" />,
   "jungle-eye-safari": <Compass className="w-16 h-16 text-primary/80" />,
@@ -134,26 +134,27 @@ function ProjectCard({
       transition={{ duration: 0.45, delay: index * 0.07 }}
       className={`group flex flex-col rounded-2xl overflow-hidden bg-card border border-border
                   hover:border-primary/40 hover:-translate-y-1.5 hover:shadow-xl ${accent.glow}
-                  transition-all duration-300 ${project.featured ? "ring-1 ring-primary/25" : ""}`}
+                  transition-all duration-300`}
     >
       {/* Card top */}
-      <div className="relative h-44 flex items-center justify-center overflow-hidden bg-secondary/50">
-        {/* Dot grid */}
-        <div className="absolute inset-0 opacity-40"
-             style={{ backgroundImage: "radial-gradient(hsl(var(--muted-fg)/0.3) 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
-        {/* Top gradient bar */}
-        <div className={`absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r ${accent.from} via-primary to-transparent opacity-70`} />
-
-        <span className="z-10 group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-          {icon}
-        </span>
-
-        {project.featured && (
-          <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full
-                           bg-primary/10 text-primary border border-primary/20 text-[10px] font-bold uppercase tracking-wider z-10">
-            <Star className="w-3 h-3 fill-current text-amber-500 mr-1" /> Featured
-          </span>
+      <div className="relative h-48 flex items-center justify-center overflow-hidden bg-secondary/50">
+        {project.image ? (
+          <img 
+            src={project.image} 
+            alt={project.title} 
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <>
+            <div className="absolute inset-0 opacity-40"
+                 style={{ backgroundImage: "radial-gradient(hsl(var(--muted-fg)/0.3) 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
+            <span className="z-10 group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
+              {icon}
+            </span>
+          </>
         )}
+        {/* Top gradient bar */}
+        <div className={`absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r ${accent.from} via-primary to-transparent opacity-70 z-20`} />
 
         <span className={`absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full
                           text-[10px] font-bold uppercase tracking-wider z-10 ${

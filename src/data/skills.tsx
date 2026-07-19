@@ -2,7 +2,7 @@ import React from "react";
 import { 
   SiPython, SiJavascript, SiTypescript, SiPhp, SiC, 
   SiReact, SiNextdotjs, SiNestjs, SiHtml5, SiTailwindcss, SiSpringboot, SiDjango,
-  SiMysql, SiPostgresql, SiGit
+  SiMysql, SiPostgresql, SiGit, SiExpress
 } from "react-icons/si";
 import { VscAzure } from "react-icons/vsc";
 import { FaJava, FaAws } from "react-icons/fa";
@@ -44,6 +44,7 @@ export const skills: SkillCategory[] = [
       { name: "Tailwind CSS", level: 90, icon: <SiTailwindcss className="w-5 h-5" /> },
       { name: "Spring Boot", level: 80, icon: <SiSpringboot className="w-5 h-5" /> },
       { name: "Django", level: 75, icon: <SiDjango className="w-5 h-5" /> },
+      { name: "Express.js", level: 80, icon: <SiExpress className="w-5 h-5" /> },
     ],
   },
   {

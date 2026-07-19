@@ -2,9 +2,10 @@ import React from "react";
 
 export const profile = {
   name: "Chalana Piyumika",
-  title: "Computer Science Undergraduate",
+  title: "Computer Science Undergraduate & Software Engineer",
   tagline: "Crafting elegant solutions from complex problems",
-  bio: "I am an enthusiastic Computer Science undergraduate with a strong interest in technology, software development, and innovation. I have hands on experience in web and application development and enjoy creating practical, user friendly solutions. I am especially interested in full stack development, cloud computing, and artificial intelligence, and I like learning new technologies and solving real world problems.",
+  heroBio: "I am a passionate Computer Science undergraduate and Software Engineer focused on full-stack development, cloud computing, and AI. I love turning complex problems into elegant, user-friendly solutions.",
+  aboutBio: "I am a Computer Science undergraduate and Software Engineer with a strong passion for technology and innovation. With hands-on experience in full-stack web and application development, I enjoy creating practical, user-friendly solutions. I am especially interested in cloud computing and artificial intelligence, and I constantly strive to learn new technologies to solve real-world problems.",
   location: "Jayaminipura, Diyathalawa",
   email: "chalanapiyumika1@gmail.com",
   phone: "+94 71 216 6336",
@@ -15,7 +16,6 @@ export const profile = {
   social: {
     github: "https://github.com/chalanapiyumika",
     linkedin: "https://linkedin.com/in/chalanapiyumika",
-    twitter: "https://twitter.com/chalanapiyumika",
     instagram: "https://instagram.com/chalanapiyumika",
     facebook: "https://facebook.com/chalanapiyumika",
   },
