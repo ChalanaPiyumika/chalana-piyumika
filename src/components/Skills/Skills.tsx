@@ -95,7 +95,7 @@ export default function Skills() {
                   <span className="font-mono text-xs font-bold text-primary">{skill.level}%</span>
                 </div>
                 {/* Progress */}
-                <div className="h-1.5 w-full rounded-full bg-secondary overflow-hidden">
+                <div className="h-2 w-full rounded-full bg-primary/15 dark:bg-white/10 overflow-hidden">
                   <motion.div
                     className="h-full rounded-full"
                     style={{ background: "linear-gradient(90deg, hsl(var(--primary)), hsl(190 72% 52%))" }}
