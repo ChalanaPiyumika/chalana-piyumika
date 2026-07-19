@@ -14,10 +14,10 @@ export const profile = {
   resume: "/Chalana_Piyumika_CV.pdf",
 
   social: {
-    github: "https://github.com/chalanapiyumika",
-    linkedin: "https://linkedin.com/in/chalanapiyumika",
-    instagram: "https://instagram.com/chalanapiyumika",
-    facebook: "https://facebook.com/chalanapiyumika",
+    github: "https://github.com/ChalanaPiyumika",
+    linkedin: "https://www.linkedin.com/in/chalanapiyumika/",
+    instagram: "https://www.instagram.com/_c_h_a_l_a_n_a_/",
+    facebook: "https://www.facebook.com/chalanapiyumika/",
   },
 
   stats: [
